@@ -37,7 +37,7 @@ Citizen.CreateThread(function()
 							local vehicle1 = GetVehiclePedIsIn(GetPlayerPed(-1), false)
 							local plate1 = GetVehicleNumberPlateText(vehicle1)
 							if string.sub(plate1, 1, 8) == "P " .. vRP.getRegistrationNumber({}) then
-								TriggerEvent("pNotify:SendNotification",{text = "You can not sell your own vehicle!",type = "error",timeout = (1500),layout = "centerRight",queue = "global",animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"}})
+								TriggerEvent("pNotify:SendNotification",{text = "You can not scratch your own vehicle!",type = "error",timeout = (1500),layout = "centerRight",queue = "global",animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"}})
 							else
 								if vehPrice ~= nil then
 									local health = GetEntityHealth(GetVehiclePedIsIn(GetPlayerPed(-1)))
