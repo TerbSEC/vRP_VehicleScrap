@@ -32,7 +32,7 @@ local scrapprices = {
 
 -- GROUPS
 -- WHO HAVE ACCESS TO SCRAP VEHICLES
-local groups = {"Mechanic", "Mechanic - Student", "Mechanic - Owner"};
+local groups = {"Mechanic"};
 
 
 
