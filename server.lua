@@ -62,7 +62,7 @@ AddEventHandler('scrap:Mechanic', function(triggerevent)
 		if vRP.hasGroup({user_id,v}) then
       		TriggerClientEvent(triggerevent, source)
     	else
-     		TriggerClientEvent("pNotify:SendNotification", player,{text = "You are not a Mechanic", type = "error", queue = "global", timeout = 15000, layout = "centerRight",animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"},killer = true})
+     		TriggerClientEvent("pNotify:SendNotification", player,{text = "You are not a Mechanic", type = "error", queue = "global", timeout = 2000, layout = "centerRight",animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"},killer = true})
      	end
     end
 end)
