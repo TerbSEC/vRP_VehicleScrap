@@ -47,7 +47,7 @@ AddEventHandler("scrap:getVehPrice", function(class)
 end)
 
 RegisterServerEvent("scrap:SellVehicle")
-AddEventHandler("scrap:SellVehicle", function(vehPrice, vehModel)
+AddEventHandler("scrap:SellVehicle", function(vehPrice)
 	local user_id = vRP.getUserId({source})
 	local player = vRP.getUserSource({user_id})
     vRP.giveBankMoney({user_id,vehPrice})
