@@ -80,7 +80,7 @@ AddEventHandler("scrap:SuccessNPC", function() -- NPC VEHICLE
 	TriggerEvent("pNotify:SendNotification",{text = "You have scrapped the vehicle for 1000$",type = "success",timeout = (3500),layout = "centerRight",queue = "global",animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"}})
 	TriggerServerEvent("scrap:SellVehicle", 1000, vehicleModelName)
 	local vehicle = SetEntityAsMissionEntity(GetVehiclePedIsIn(GetPlayerPed(-1)), true, true)
-	DeleteVehicle(vehicle)
+	DeleteEntity(vehicle)
 end)
 
 RegisterNetEvent("scrap:Success")
@@ -95,7 +95,7 @@ AddEventHandler("scrap:Success", function() -- PLAYER VEHICLE
 		TriggerEvent("pNotify:SendNotification",{text = "You have scrapped the vehicle for "..modPrice.."$",type = "success",timeout = (3500),layout = "centerRight",queue = "global",animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"}})
 		TriggerServerEvent("scrap:SellVehicle", modPrice, vehicleModelName)
 		local vehicle = SetEntityAsMissionEntity(GetVehiclePedIsIn(GetPlayerPed(-1)), true, true)
-		DeleteVehicle(vehicle)
+		DeleteEntity(vehicle)
 		vehPrice = nil
 	end
 end)
