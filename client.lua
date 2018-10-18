@@ -34,28 +34,33 @@ Citizen.CreateThread(function()
 					if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), scrapCoords2[1], scrapCoords2[2], scrapCoords2[3], true ) < 3 then
 						vehSR_drawTxt("Press ~g~E~s~ to scratch your vehicle",0,1,0.5,0.95,0.6,255,255,255,255)
 						if IsControlJustPressed(1, key) then
-							local vehicle1 = GetVehiclePedIsIn(GetPlayerPed(-1), false)
-							local plate1 = GetVehicleNumberPlateText(vehicle1)
-							if string.sub(plate1, 1, 8) == "P " .. vRP.getRegistrationNumber({}) then
-								TriggerEvent("pNotify:SendNotification",{text = "You can not scratch your own vehicle!",type = "error",timeout = (1500),layout = "centerRight",queue = "global",animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"}})
-							else
-								if vehPrice ~= nil then
-									local health = GetEntityHealth(GetVehiclePedIsIn(GetPlayerPed(-1)))
-									local modifier = health/1000
-									modPrice = round((modifier * vehPrice), 0)
+							local veh = GetVehiclePedIsUsing(GetPlayerPed(-1), false)
+            				if (GetPedInVehicleSeat(veh, -1) == GetPlayerPed(-1)) then
+								local vehicle1 = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+								local plate1 = GetVehicleNumberPlateText(vehicle1)
+								if string.sub(plate1, 1, 8) == "P " .. vRP.getRegistrationNumber({}) then
+									TriggerEvent("pNotify:SendNotification",{text = "You can not scratch your own vehicle!",type = "error",timeout = (1500),layout = "centerRight",queue = "global",animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"}})
 								else
-									local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
-									local class = GetVehicleClass(vehicle)
-									TriggerServerEvent("scrap:getVehPrice", class)
-								end
+									if vehPrice ~= nil then
+										local health = GetEntityHealth(GetVehiclePedIsIn(GetPlayerPed(-1)))
+										local modifier = health/1000
+										modPrice = round((modifier * vehPrice), 0)
+									else
+										local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+										local class = GetVehicleClass(vehicle)
+										TriggerServerEvent("scrap:getVehPrice", class)
+									end
 
-								local vehicle = GetVehiclePedIsIn(GetPlayerPed(GetPlayerFromServerId(owner)), false)
-								local plate = GetVehicleNumberPlateText(vehicle)
-								if string.sub(plate, 1, 2) == "P " then
-									TriggerServerEvent('scrap:Mechanic', "scrap:Success") -- PLAYER VEHICLE
-				            	else
-									TriggerServerEvent('scrap:Mechanic', "scrap:SuccessNPC") -- NPC VEHICLE
+									local vehicle = GetVehiclePedIsIn(GetPlayerPed(GetPlayerFromServerId(owner)), false)
+									local plate = GetVehicleNumberPlateText(vehicle)
+									if string.sub(plate, 1, 2) == "P " then
+										TriggerServerEvent('scrap:Mechanic', "scrap:Success") -- PLAYER VEHICLE
+				            		else
+										TriggerServerEvent('scrap:Mechanic', "scrap:SuccessNPC") -- NPC VEHICLE
+									end
 							    end
+                            else
+								TriggerEvent("pNotify:SendNotification",{text = "You need to be the driver of the vehicle!",type = "error",timeout = (1500),layout = "centerRight",queue = "global",animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"}})
 							end
 						end
 					end
