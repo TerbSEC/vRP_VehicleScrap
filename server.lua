@@ -2,7 +2,6 @@ local Tunnel = module("vrp", "lib/Tunnel")
 local Proxy = module("vrp", "lib/Proxy")
 
 vRP = Proxy.getInterface("vRP")
-vRPclient = Tunnel.getInterface("vRP","vRP_VehicleScrap")
 
 local scrapprices = {
 	{id = 0, price = 3600}, --compacts
@@ -35,9 +34,8 @@ local scrapprices = {
 local groups = {"Mechanic"};
 
 
-
-RegisterServerEvent("scrap:getVehPrice")
-AddEventHandler("scrap:getVehPrice", function(class)
+RegisterServerEvent("vRP_VehicleScrap:getVehPrice")
+AddEventHandler("vRP_VehicleScrap:getVehPrice", function(class)
 	for k, price in pairs(scrapprices) do
 		if class == price.id then
 			vehPrice = price.price
@@ -46,23 +44,21 @@ AddEventHandler("scrap:getVehPrice", function(class)
 	end
 end)
 
-RegisterServerEvent("scrap:SellVehicle")
-AddEventHandler("scrap:SellVehicle", function(vehPrice)
+RegisterServerEvent("vRP_VehicleScrap:SellVehicle")
+AddEventHandler("vRP_VehicleScrap:SellVehicle", function(vehPrice)
 	local user_id = vRP.getUserId({source})
-	local player = vRP.getUserSource({user_id})
     vRP.giveBankMoney({user_id,vehPrice})
 end)
 
-RegisterServerEvent('scrap:Mechanic')
-AddEventHandler('scrap:Mechanic', function(triggerevent)
+RegisterServerEvent('vRP_VehicleScrap:Mechanic')
+AddEventHandler('vRP_VehicleScrap:Mechanic', function(triggerevent)
 	local source = source
     local user_id = vRP.getUserId({source})
-    local player = vRP.getUserSource({user_id})
     for k,v in ipairs(groups) do
 		if vRP.hasGroup({user_id,v}) then
       		TriggerClientEvent(triggerevent, source)
     	else
-     		TriggerClientEvent("pNotify:SendNotification", player,{text = "You are not a Mechanic", type = "error", queue = "global", timeout = 2000, layout = "centerRight",animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"},killer = true})
+     		TriggerClientEvent("pNotify:SendNotification", source,{text = "You are not a Mechanic", type = "error", queue = "global", timeout = 2000, layout = "centerRight",animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"},killer = true})
      	end
     end
 end)
